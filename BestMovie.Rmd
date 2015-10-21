@@ -1,0 +1,36 @@
+---
+title: "BestMovie"
+author: "Rodolfo Viana"
+date: "20-10-2015"
+output: html_document
+---
+
+
+
+```{r}
+library(dplyr)
+
+# 12anos 0050083
+# Philomena 2431286
+# her 1798709
+# gravity 1454468
+
+newmovies <- read.delim("~/Projetos/MovieTweetings/latest/newmovies.dat", header=FALSE)
+colnames(newmovies) <- c("movie_id", "movie_title", "genre")
+
+filter(newmovies, movie_id == 1454468)
+
+newratings <- read.delim("~/Projetos/MovieTweetings/latest/newratings.dat", header=FALSE)
+colnames(newratings) <-  c("user_id", "movie_id", "rating", "rating_timestamp")
+
+nebraska <- filter(newratings, movie_id == 1454468 & rating_timestamp > 1389830400)
+nebraska2 <- filter(newratings, movie_id == 1454468 & rating_timestamp < 1389830400)
+
+mean(nebraska$rating)
+mean(nebraska2$rating)
+
+# Jan - 16 - 2014 =  1389830400
+
+
+```
+
