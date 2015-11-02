@@ -5,32 +5,30 @@ date: "20-10-2015"
 output: html_document
 ---
 
-
+Comparativo entre as notas do IMDB antes de um filme ser nomeado ao oscar e depois.
 
 ```{r}
 library(dplyr)
+source("oscar-lib.R")
 
-# 12anos 0050083
-# Philomena 2431286
-# her 1798709
-# gravity 1454468
+nominations <- read.csv("~/Projetos/MovieTweetings/Data/Oscar-Nominations.csv")
+movies <- read.delim("~/Projetos/MovieTweetings/latest/newmovies.dat", header=FALSE)
+movies_ratings <- read.delim("~/Projetos/MovieTweetings/latest/newratings.dat", header=FALSE)
 
-newmovies <- read.delim("~/Projetos/MovieTweetings/latest/newmovies.dat", header=FALSE)
-colnames(newmovies) <- c("movie_id", "movie_title", "genre")
+colnames(movies) <- c("movie_id", "movie_title", "genre")
+colnames(movies_ratings) <-  c("user_id", "movie_id", "rating", "rating_timestamp")
 
-filter(newmovies, movie_id == 1454468)
+#movies_2013 <- movies %>%
+#  filter(movie_id %in% filter(nominations, year == 2013)$cod_imdb)
 
-newratings <- read.delim("~/Projetos/MovieTweetings/latest/newratings.dat", header=FALSE)
-colnames(newratings) <-  c("user_id", "movie_id", "rating", "rating_timestamp")
+#movies_2014 <- movies %>%
+#  filter(movie_id %in% filter(nominations, year == 2014)$cod_imdb)
 
-nebraska <- filter(newratings, movie_id == 1454468 & rating_timestamp > 1389830400)
-nebraska2 <- filter(newratings, movie_id == 1454468 & rating_timestamp < 1389830400)
+oscar_nominations_2013 = 1389830400
+oscar_nominations_2014 = 1421280000
 
-mean(nebraska$rating)
-mean(nebraska2$rating)
-
-# Jan - 16 - 2014 =  1389830400
-
+oscar_2013 <- mean_before_after(movies_ratings, 2013, oscar_nominations_2013, nominations)
+oscar_2014 <- mean_before_after(movies_ratings, 2014, oscar_nominations_2014, nominations)
 
 ```
 
