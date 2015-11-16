@@ -11,12 +11,16 @@ Comparing the IMDB rating before a movie being named to the Oscar and after.
 library(ggplot2)
 library(dplyr)
 library(tidyr)
+require(scales)
 source("oscar-lib.R")
 
-nominations <- read.csv("~/Projetos/MovieTweetings/Data/Oscar-Nominations.csv")
-movies <- read.delim("~/Projetos/MovieTweetings/latest/newmovies.dat", header=FALSE)
-movies_ratings <- read.delim("~/Projetos/MovieTweetings/latest/newratings.dat", header=FALSE)
+nominations <- read.csv("Data/Oscar-Nominations.csv")
+movies <- read.delim("latest/newmovies.dat", header=FALSE)
+movies_ratings <- read.delim("latest/newratings.dat", header=FALSE)
+```
 
+
+```{r}
 colnames(movies) <- c("movie_id", "movie_title", "genre")
 colnames(movies_ratings) <-  c("user_id", "movie_id", "rating", "rating_timestamp")
 
@@ -43,7 +47,7 @@ plot <- oscar_2014 %>%
 
 p <- ggplot(data=plot, aes(x= name, y=ratings, fill=type)) + 
   geom_bar(stat="identity", position=position_dodge()) + 
-  labs(y='Ratings', x='Movies', title = "2013") + 
+  labs(y='Ratings', x='Movies', title = "2014") + 
   theme_classic() + 
   theme(axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), panel.background=element_blank()) +
   scale_fill_manual(values=c("#edf8b1", "#7fcdbb")) 
@@ -51,22 +55,59 @@ p <- ggplot(data=plot, aes(x= name, y=ratings, fill=type)) +
 p
 ```
 
+2013
+
 ```{r}
-n = c(2, 3, 5) 
-> s = c("aa", "bb", "cc") 
-> b = c(TRUE, FALSE, TRUE) 
-> df = data.frame(n, s, b)  
 month <- c("Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr")
 num <- c(1,2,3,4,5,6,7)
 timestamp <- c(1381881600,1384560000,1387152000,1389830400,1392508800,1394928000,1397606400)
 df = data.frame(month, num, timestamp)  
 
-before_date <- movies_ratings  %>% 
-    filter(rating_timestamp > 1381881600)
-  
-  group_before <- group_by(before_date, movie_id)
-  
-  before_mean <- summarise(group_before, mean(rating))
-  colnames(before_oscar_mean) <- c("movie_id", "ratings_before")
+toPlot <- mean_before(movies_ratings, df, 2013, nominations)
 
+ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colour=name)) + 
+  geom_line() +
+  geom_point() + 
+  scale_colour_manual(values = c(alpha("#999999", 1), 
+                                 alpha("#f781bf", 1),
+                                 alpha("#a65628", 1),
+                                 alpha("#ffff33", 1), 
+                                 alpha("#ff7f00", 1),
+                                 alpha("#984ea3", 1), 
+                                 alpha("#4daf4a", 1),
+                                 alpha("#377eb8", 1), 
+                                 alpha("#e41a1c", 1)),                                
+                      guide = guide_legend(title = "Movies", 
+                                           override.aes = list(alpha = 1, size = 4))) +
+  ylab("Ratings") + xlab("Month") +  
+  theme_classic() + 
+  theme(axis.ticks = element_blank())
+```
+
+2014
+
+```{r}
+month <- c("Oct", "Nov", "Dec", "Jan", "Feb", "Mar", "Apr")
+num <- c(1,2,3,4,5,6,7)
+timestamp <- c(1413331200, 1416009600, 1418601600, 1421280000, 1423958400, 1426377600, 1429056000)
+df = data.frame(month, num, timestamp)  
+
+toPlot <- mean_before(movies_ratings, df, 2014, nominations)
+
+ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colour=name)) + 
+  geom_line() +
+  geom_point() + 
+  scale_colour_manual(values = c(alpha("#999999", 1), 
+                                 alpha("#f781bf", 1),
+                                 alpha("#a65628", 1),
+                                 alpha("#ffff33", 1), 
+                                 alpha("#ff7f00", 1),
+                                 alpha("#984ea3", 1), 
+                                 alpha("#4daf4a", 1),
+                                 alpha("#377eb8", 1)),                                
+                      guide = guide_legend(title = "Movies", 
+                                           override.aes = list(alpha = 1, size = 4))) +
+  ylab("Ratings") + xlab("Month") +  
+  theme_classic() + 
+  theme(axis.ticks = element_blank())
 ```

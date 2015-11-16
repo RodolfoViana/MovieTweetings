@@ -1,5 +1,4 @@
 # Return the mean of ratings before and after oscar nominations 
-
 mean_before_after <- function(movies_ratings, year_movie, date_nominations, nominations) {
   before_oscar <- movies_ratings  %>% 
     filter(rating_timestamp < date_nominations)  %>% 
@@ -23,12 +22,24 @@ mean_before_after <- function(movies_ratings, year_movie, date_nominations, nomi
   left_join(oscar, nominations, by = c("movie_id" = "cod_imdb"))
 }
 
-mean_before <- function(movies_ratings, date, nominations) {
-  before_date <- movies_ratings  %>% 
-    filter(rating_timestamp > date)
+mean_before <- function(movies_ratings, df_times, year_movie, nominations) {
+  df <- data.frame()
+  timestamp <- df_times$timestamp
   
-  group_before <- group_by(before_date, movie_id)
-  
-  before_mean <- summarise(group_before, mean(rating))
-  colnames(before_oscar_mean) <- c("movie_id", "ratings_before")
+  for (date in timestamp){
+    before_date <- movies_ratings  %>% 
+      filter(rating_timestamp < date) %>%
+      filter(movie_id %in% filter(nominations, year == year_movie)$cod_imdb)
+    
+    group_before <- group_by(before_date, movie_id)
+    
+    before_mean <- summarise(group_before, mean(rating))
+    colnames(before_mean) <- c("movie_id", "ratings")
+    
+    before_mean$timestamp <- date
+    
+    df <- rbind(df, before_mean)
+  }
+  df <- left_join(df, nominations, by = c("movie_id" = "cod_imdb"))
+  left_join(df, df_times, by = c("timestamp" = "timestamp"))
 }
