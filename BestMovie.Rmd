@@ -31,28 +31,41 @@ oscar_2013 <- mean_before_after(movies_ratings, 2013, oscar_nominations_2013, no
 oscar_2014 <- mean_before_after(movies_ratings, 2014, oscar_nominations_2014, nominations)
 
 plot <- oscar_2013 %>%
-  gather(type, ratings, ratings_before:ratings_after)
+  gather(type, ratings, Before_Nomination:After_Nomination)
 
 p <- ggplot(data=plot, aes(x= name, y=ratings, fill=type)) + 
   geom_bar(stat="identity", position=position_dodge()) + 
-  labs(y='Ratings', x='Movies', title = "2013") + 
+  labs(y='Ratings', x='', title = "2013") + 
   theme_classic() + 
-  theme(axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), panel.background=element_blank()) +
+  theme(axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), panel.background=element_blank(), legend.title=element_blank()) +
   scale_fill_manual(values=c("#edf8b1", "#7fcdbb"))
 
 p
+png("mean_2013.png", 
+    width = 800, height = 600)
+p
+dev.off()
+
 
 plot <- oscar_2014 %>%
-  gather(type, ratings, ratings_before:ratings_after)
+  gather(type, ratings, Before_Nomination:After_Nomination)
+
+plot$name <- as.character(plot$name)
+plot$name <-  ifelse(plot$name == "Birdman or (The Unexpected Virtue of Ignorance) ", "Birdman", plot$name)
 
 p <- ggplot(data=plot, aes(x= name, y=ratings, fill=type)) + 
   geom_bar(stat="identity", position=position_dodge()) + 
-  labs(y='Ratings', x='Movies', title = "2014") + 
+  labs(y='Ratings', x='', title = "2014") + 
   theme_classic() + 
-  theme(axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), panel.background=element_blank()) +
+  theme(axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), panel.background=element_blank(), legend.title=element_blank()) +
   scale_fill_manual(values=c("#edf8b1", "#7fcdbb")) 
 
 p
+png("mean_2014.png", 
+    width = 800, height = 600)
+p
+dev.off()
+
 ```
 
 2013
@@ -65,7 +78,7 @@ df = data.frame(month, num, timestamp)
 
 toPlot <- mean_before(movies_ratings, df, 2013, nominations)
 
-ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colour=name)) + 
+p <- ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colour=name)) + 
   geom_line() +
   geom_point() + 
   scale_colour_manual(values = c(alpha("#999999", 1), 
@@ -82,6 +95,12 @@ ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colou
   ylab("Ratings") + xlab("Month") +  
   theme_classic() + 
   theme(axis.ticks = element_blank())
+
+p
+png("ratings_2013.png", 
+    width = 800, height = 600)
+p
+dev.off()
 ```
 
 2014
@@ -94,7 +113,7 @@ df = data.frame(month, num, timestamp)
 
 toPlot <- mean_before(movies_ratings, df, 2014, nominations)
 
-ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colour=name)) + 
+p <- ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colour=name)) + 
   geom_line() +
   geom_point() + 
   scale_colour_manual(values = c(alpha("#999999", 1), 
@@ -110,4 +129,10 @@ ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colou
   ylab("Ratings") + xlab("Month") +  
   theme_classic() + 
   theme(axis.ticks = element_blank())
+
+p
+png("ratings_2014.png", 
+    width = 800, height = 600)
+p
+dev.off()
 ```

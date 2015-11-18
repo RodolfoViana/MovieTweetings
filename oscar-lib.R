@@ -12,10 +12,10 @@ mean_before_after <- function(movies_ratings, year_movie, date_nominations, nomi
   group_after_oscar <- group_by(after_oscar, movie_id)
   
   before_oscar_mean <- summarise(group_before_oscar, mean(rating))
-  colnames(before_oscar_mean) <- c("movie_id", "ratings_before")
+  colnames(before_oscar_mean) <- c("movie_id", "Before_Nomination")
   
   after_oscar_mean <- summarise(group_after_oscar, mean(rating))
-  colnames(after_oscar_mean) <- c("movie_id", "ratings_after")
+  colnames(after_oscar_mean) <- c("movie_id", "After_Nomination")
   
   oscar <- cbind(before_oscar_mean, after_oscar_mean[,2])
   
