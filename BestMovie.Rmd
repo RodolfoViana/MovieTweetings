@@ -37,12 +37,12 @@ p <- ggplot(data=plot, aes(x= name, y=ratings, fill=type)) +
   geom_bar(stat="identity", position=position_dodge()) + 
   labs(y='Ratings', x='', title = "2013") + 
   theme_classic() + 
-  theme(axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), panel.background=element_blank(), legend.title=element_blank()) +
+  theme(text = element_text(size=18), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), panel.background=element_blank(), legend.title=element_blank()) +
   scale_fill_manual(values=c("#edf8b1", "#7fcdbb"))
 
 p
 png("mean_2013.png", 
-    width = 800, height = 600)
+    width = 1000, height = 600)
 p
 dev.off()
 
@@ -57,12 +57,12 @@ p <- ggplot(data=plot, aes(x= name, y=ratings, fill=type)) +
   geom_bar(stat="identity", position=position_dodge()) + 
   labs(y='Ratings', x='', title = "2014") + 
   theme_classic() + 
-  theme(axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), panel.background=element_blank(), legend.title=element_blank()) +
+  theme(text = element_text(size=18), axis.ticks = element_blank(), axis.text.x = element_text(angle = 45, hjust = 1), panel.background=element_blank(), legend.title=element_blank()) +
   scale_fill_manual(values=c("#edf8b1", "#7fcdbb")) 
 
 p
 png("mean_2014.png", 
-    width = 800, height = 600)
+     width = 1000, height = 600)
 p
 dev.off()
 
@@ -94,11 +94,11 @@ p <- ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  
                                            override.aes = list(alpha = 1, size = 4))) +
   ylab("Ratings") + xlab("Month") +  
   theme_classic() + 
-  theme(axis.ticks = element_blank())
+  theme(text = element_text(size=18), axis.ticks = element_blank())
 
 p
 png("ratings_2013.png", 
-    width = 800, height = 600)
+    width = 1000, height = 600)
 p
 dev.off()
 ```
@@ -128,11 +128,11 @@ p <- ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  
                                            override.aes = list(alpha = 1, size = 4))) +
   ylab("Ratings") + xlab("Month") +  
   theme_classic() + 
-  theme(axis.ticks = element_blank())
+  theme(text = element_text(size=18), axis.ticks = element_blank())
 
 p
 png("ratings_2014.png", 
-    width = 800, height = 600)
+    width = 1000, height = 600)
 p
 dev.off()
 ```
