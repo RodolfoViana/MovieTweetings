@@ -113,6 +113,10 @@ df = data.frame(month, num, timestamp)
 
 toPlot <- mean_before(movies_ratings, df, 2014, nominations)
 
+toPlot$name <- as.character(toPlot$name)
+toPlot$name <-  ifelse(toPlot$name == "Birdman or (The Unexpected Virtue of Ignorance) ", "Birdman", toPlot$name)
+
+
 p <- ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colour=name)) + 
   geom_line() +
   geom_point() + 
