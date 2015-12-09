@@ -79,8 +79,8 @@ df = data.frame(month, num, timestamp)
 toPlot <- mean_before(movies_ratings, df, 2013, nominations)
 
 p <- ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colour=name)) + 
-  geom_line() +
-  geom_point() + 
+  geom_line(size=1) +
+  geom_point(size=3.5) + 
   scale_colour_manual(values = c(alpha("#999999", 1), 
                                  alpha("#f781bf", 1),
                                  alpha("#a65628", 1),
@@ -118,8 +118,8 @@ toPlot$name <-  ifelse(toPlot$name == "Birdman or (The Unexpected Virtue of Igno
 
 
 p <- ggplot(data = toPlot, aes(x=reorder(month, num), y = ratings, group=name,  colour=name)) + 
-  geom_line() +
-  geom_point() + 
+  geom_line(size=1) +
+  geom_point(size=3.5) + 
   scale_colour_manual(values = c(alpha("#999999", 1), 
                                  alpha("#f781bf", 1),
                                  alpha("#a65628", 1),
