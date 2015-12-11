@@ -36,7 +36,6 @@ a:focus {
     color: #eb3812;
 }
 
-h1,
 h2,
 h3,
 h4,
@@ -50,6 +49,18 @@ p {
     font-size: 16px;
     line-height: 1.5;
 }
+
+.slogan {
+    font-family: Arial,sans-serif;
+	font-size: 18px;
+	text-shadow: 2px 2px 1px #000;
+}
+
+h1 {
+	font-family: 'Poiret One', cursive;
+	 text-shadow: 2px 2px 4px #000;
+}
+
 
 .bg-primary {
     background-color: #f05f40;
@@ -218,7 +229,7 @@ header .header-content .header-content-inner p {
 
     header .header-content {
         position: absolute;
-        top: 50%;
+        top: 28%;
         padding: 0 50px;
         -webkit-transform: translateY(-50%);
         -ms-transform: translateY(-50%);
@@ -473,4 +484,17 @@ img::-moz-selection {
 
 body {
     webkit-tap-highlight-color: #222;
+}
+
+#language { 
+  height: 104px; 
+  width: 104px; 
+  position: fixed; 
+  top: 10%; 
+  z-index: 999;
+  transform: rotate(-90deg);
+  -webkit-transform: rotate(-90deg); 
+  -moz-transform: rotate(-90deg); 
+  -o-transform: rotate(-90deg); 
+  filter: progid:DXImageTransform.Microsoft.BasicImage(rotation=3);
 }
